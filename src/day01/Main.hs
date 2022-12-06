@@ -5,12 +5,15 @@ import qualified Data.List as List
 main :: IO ()
 main = do
        contents <- readFile "resources/day01.txt"
-       let calories = foldl (\x y -> case y of
-                                     "" -> x ++ [0]
-                                     _ -> init x ++ [last x + (read y :: Int)]) [0] . lines $ contents
+       let calories = foldl (\acc x -> case x of
+                                     "" -> acc ++ [0]
+                                     _ -> init acc ++ [last acc + (read x :: Int)]) [0] . lines $ contents
 
-       print $ maximum calories
-       print $ topCalories 3 calories
+       let solution1 = maximum calories
+       let solution2 = topCalories 3 calories
+
+       print solution1
+       print solution2
 
 topCalories :: (Num n, Ord n, Num l, Ord l) => n -> [l] -> l
 topCalories n l
